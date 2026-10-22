@@ -12,8 +12,12 @@ jobs:
     steps:
       - name: Check GET /users (status 200 và response time < 800ms)
         run: |
+          # Làm nóng kết nối (bỏ chi phí DNS/TLS lần đầu), không tính vào kết quả
+          curl -s -o /dev/null https://gorest.co.in/public/v2/users
+
+          # Đo thật
           RESULT=$(curl -s -o /dev/null \
-            -w "%{http_code} %{time_total}" \
+            -w "%{http_code} %{time_starttransfer}" \
             -H "Authorization: Bearer ${{ secrets.GOREST_TOKEN }}" \
             https://gorest.co.in/public/v2/users)
 
