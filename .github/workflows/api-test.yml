@@ -21,9 +21,12 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
+      - name: List files
+        run: ls -la
+
       - name: Run API tests
         run: |
-          newman run "2474802010153_ChâuQuangHưng_GoRest.postman_collection.json" \
-            -e "2474802010153_ChauQuangHung_GoRest_Env.postman_environment.json" \
+          newman run collection.json \
+            -e environment.json \
             --env-var "baseurl=https://gorest.co.in" \
             --env-var "token=${{ secrets.GOREST_TOKEN }}"
